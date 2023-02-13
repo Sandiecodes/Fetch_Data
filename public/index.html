@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Employee </title>
+    </head> 
+    <boody>
+        <script>
+            function send() {
+                fetch('/addemployee', {
+                    method: 'POST',
+                    body: new URLSearchParams({
+                        fname: document.getElementById("fname").value
+                    }).toString(),
+                    headers: {"Content-type": "application/x-www-form-urlencoded"}
+                })
+                .then(response => response.json())
+                .then(fname => console.log(fname))
+                .catch(error => console.error(error))
+                alert("New employee inserted");
+            }
+            function read() {
+                fetch('/getemployee', {
+                    method: 'GET'
+                })
+                .then(response => response.json())
+                .then(data => {document.getElementById("Output").innerHTML =
+                JSON.stringify(data)})
+                .catch(error => console.error(error)) 
+            }
+        </script>
+        <label for="fname">Name:</label>
+        <input type="text" id="fname" name="fname"><br><br>
+        <button onclick="send()">add employee</button><br><br>
+        <button onclick="read()">get employees</button><br><br>
+        <div id="Output"></div>
+    </boody>
+</html>
